@@ -6,7 +6,8 @@ def exibir_menu():
     print("\n=========== MENU CADASTRO ===========")
     print("1. Cadastrar pessoa")
     print("2. Ver cadastros")
-    print("3. Sair")
+    print("3. Apagar cadastro")
+    print("4. Sair")
     print("======================================")
 
 def salvar_cadastros(cadastros):
@@ -45,6 +46,27 @@ def ver_cadastros(cadastros):
             print(f"{i}. Nome: {pessoa['Nome']}, Idade: {pessoa['Idade']}, Turma: {pessoa['Turma']}, Curso: {pessoa['Curso']}")
     input("\nPressione Enter para voltar ao menu...")
 
+def apagar_cadastro(cadastros):
+    if not cadastros:
+        print("\nNenhum cadastro para apagar.")
+        return
+    
+    print("\n===== APAGAR CADASTRO =====")
+    for i, pessoa in enumerate(cadastros, 1):
+        print(f"{i}. Nome: {pessoa['Nome']}, Idade: {pessoa['Idade']}, Turma: {pessoa['Turma']}, Curso: {pessoa['Curso']}")
+    
+    try:
+        indice = int(input("\nDigite o número do cadastro que deseja apagar: "))
+        if 1 <= indice <= len(cadastros):
+            removido = cadastros.pop(indice - 1)
+            salvar_cadastros(cadastros)
+            print(f"Cadastro de {removido['Nome']} apagado com sucesso!")
+        else:
+            print("Número inválido.")
+    except ValueError:
+        print("Entrada inválida. Digite apenas números.")
+
+
 # Programa principal
 def main():
     cadastros = carregar_cadastros()
@@ -58,6 +80,8 @@ def main():
         elif opcao == "2":
             ver_cadastros(cadastros)
         elif opcao == "3":
+            apagar_cadastro(cadastros)
+        elif opcao == "4":
             print("Saindo...")
             break
         else:
